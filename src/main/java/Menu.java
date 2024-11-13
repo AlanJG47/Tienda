@@ -33,7 +33,7 @@ public class Menu {
 
             try {
                 int opcion = scanner.nextInt();
-                scanner.nextLine(); // Limpiar el buffer
+                scanner.nextLine(); 
 
                 switch (opcion) {
                     case 1:
@@ -55,7 +55,7 @@ public class Menu {
                 }
             } catch (Exception e) {
                 System.out.println("Error inesperado: " + e.getMessage());
-                scanner.nextLine(); // Limpiar el buffer en caso de error
+                scanner.nextLine(); 
             }
         }
     }
@@ -71,7 +71,7 @@ public class Menu {
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer
+            scanner.nextLine(); 
 
             try {
                 switch (opcion) {
@@ -149,7 +149,7 @@ public class Menu {
 
             try {
                 int opcion = scanner.nextInt();
-                scanner.nextLine(); // Limpiar el buffer
+                scanner.nextLine(); 
 
                 switch (opcion) {
                     case 1:
@@ -483,7 +483,7 @@ public class Menu {
 
             ventaDAO.insertar(venta);
 
-            // Mostrar detalle de la venta recién creada
+            // Detalle de la venta recién creada
             System.out.println("\nDetalle de la venta registrada:");
             Venta ventaRegistrada = ventaDAO.obtenerUltimaVenta();
             Cliente cliente = clienteDAO.obtenerPorDni(ventaRegistrada.getDniCliente());
@@ -517,7 +517,6 @@ public class Menu {
             venta.setCantidad(nuevaCantidad);
         }
 
-        // Aquí puedes agregar más campos para actualizar si es necesario
 
         ventaDAO.actualizar(venta);
         System.out.println("Venta actualizada exitosamente!");
@@ -530,7 +529,6 @@ public class Menu {
         System.out.println("Venta eliminada exitosamente!");
     }
 
-    // Nuevo método para crear productos
     private void crearNuevoProducto() throws SQLException {
         System.out.println("\nCrear Nuevo Producto");
 
