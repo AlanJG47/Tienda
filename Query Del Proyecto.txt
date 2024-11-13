@@ -1,0 +1,72 @@
+CREATE DATABASE TiendaCelulares;
+USE TiendaCelulares;
+
+-- Tabla de Clientes sin id_cliente y usando dni como clave primaria
+CREATE TABLE clientes (
+    dni VARCHAR(20) PRIMARY KEY,  -- DNI como clave primaria
+    nombre VARCHAR(100) NOT NULL,
+    telefono VARCHAR(20),
+    direccion VARCHAR(200),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla de Proveedores
+CREATE TABLE proveedores (
+    id_proveedor INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_empresa VARCHAR(100) NOT NULL,
+    contacto_nombre VARCHAR(100),
+    telefono_soporte VARCHAR(20),  -- Renombrado a telefono_soporte
+    telefono_comercial VARCHAR(20), -- Nuevo campo para telefono comercial
+    email VARCHAR(100),
+    direccion VARCHAR(200)
+);
+
+-- Tabla de Productos (Celulares)
+CREATE TABLE productos (
+    id_producto INT PRIMARY KEY AUTO_INCREMENT,
+    marca VARCHAR(50) NOT NULL,
+    modelo VARCHAR(100) NOT NULL,
+    precio_compra DECIMAL(10,2) NOT NULL,
+    precio_venta DECIMAL(10,2) NOT NULL,
+    stock INT NOT NULL DEFAULT 0,
+    id_proveedor INT,
+    FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor)
+);
+
+-- Tabla de Ventas
+CREATE TABLE ventas (
+    id_venta INT PRIMARY KEY AUTO_INCREMENT,
+    dni_cliente VARCHAR(20),
+    id_producto INT,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    fecha_venta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (dni_cliente) REFERENCES clientes(dni),  -- Cambiamos id_cliente por dni_cliente
+    FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
+);
+
+-- Insertar datos en la tabla de Clientes
+INSERT INTO clientes (dni, nombre, telefono, direccion) VALUES
+('12345678', 'Juan Pérez', '123456789', 'Calle Falsa 123'),
+('87654321', 'María García', '987654321', 'Avenida Siempreviva 456'),
+('11223344', 'Carlos López', '1122334455', 'Boulevard Central 789');
+
+-- Insertar datos en la tabla de Proveedores
+INSERT INTO proveedores (nombre_empresa, contacto_nombre, telefono_soporte, telefono_comercial, email, direccion) VALUES
+('Celulares XYZ', 'Ana Morales', '44556677', '66677788', 'contacto@xyz.com', 'Calle Mayor 10'),
+('TecnoMundo', 'Luis Gómez', '55443322', '99988877', 'info@tecnomundo.com', 'Avenida Principal 45'),
+('ElectroShop', 'Julia Díaz', '77889900', '33344455', 'ventas@electroshop.com', 'Plaza Central 12');
+
+-- Insertar datos en la tabla de Productos
+INSERT INTO productos (marca, modelo, precio_compra, precio_venta, stock, id_proveedor) VALUES
+('Samsung', 'Galaxy S21', 500.00, 750.00, 10, 1),
+('Apple', 'iPhone 13', 800.00, 1100.00, 5, 2),
+('Xiaomi', 'Redmi Note 10', 200.00, 300.00, 20, 3),
+('Huawei', 'P40 Lite', 250.00, 350.00, 15, 1);
+
+-- Insertar datos en la tabla de Ventas
+INSERT INTO ventas (dni_cliente, id_producto, cantidad, precio_unitario) VALUES
+('12345678', 1, 1, 750.00),
+('87654321', 2, 1, 1100.00),
+('11223344', 3, 2, 300.00),
+('12345678', 4, 1, 350.00);
